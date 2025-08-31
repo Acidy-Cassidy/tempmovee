@@ -1,0 +1,11 @@
+if command -v tmux >/dev/null 2>&1 && [ -z "$TMUX" ] && [ "$TERM" != "screen" ] && [ -n "$PS1" ]; then
+    # Kill any existing main-root session to avoid attaching to a broken state
+    tmux kill-session -t main-root 2>/dev/null
+    # Create new tmux session named 'main-root'
+    tmux new-session -s main-root \; \
+        split-window -h -p 50 \; \
+        split-window -v -t 1 -p 50 \; \
+        send-keys -t 1 'NO_AT_BRIDGE=1 setoolkit 2> /tmp/setoolkit_error.log || bash' C-m \; \
+        send-keys -t 2 'cd /opt/selfcode && source venv/bin/activate && NO_AT_BRIDGE=1 python selfcode.py 2> /tmp/selfcode_error.log || bash' C-m \; \
+        select-pane -t 0
+fi
