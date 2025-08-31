@@ -1,3 +1,4 @@
 Setoolkit https://github.com/trustedsec/social-engineer-toolkit.git
 tmux
 selfcode
+crypter https://github.com/carved4/go-crypter.git
